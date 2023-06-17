@@ -1,7 +1,18 @@
+using Microsoft.EntityFrameworkCore;
+using VCinema.Data;
+
 var builder = WebApplication.CreateBuilder(args);
+
+// Configuration setup
+var configuration = new ConfigurationBuilder()
+    .SetBasePath(builder.Environment.ContentRootPath)
+    .AddJsonFile("appsettings.json")
+    .Build();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+// Add AppDbContext
+builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnectionString")));
 
 var app = builder.Build();
 
@@ -23,5 +34,8 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+//seed database
+AppDbInitializer.Seed(app);
 
 app.Run();
