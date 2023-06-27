@@ -4,17 +4,17 @@ using VCinema.Data;
 
 namespace VCinema.Controllers
 {
-    public class ProducersController : Controller
+    public class MoviesController : Controller
     {
         private readonly AppDbContext _context;
-        public ProducersController(AppDbContext context)
+        public MoviesController(AppDbContext context)
         {
             _context = context;
         }
         public async Task<IActionResult> Index()
         {
-            var allProdusers = await _context.Producers.ToListAsync();
-            return View(allProdusers);
+            var allMovies = await _context.Movies.Include(n => n.Cinema).OrderBy(n => n.Name).ToListAsync(); 
+            return View(allMovies);
         }
     }
 }
