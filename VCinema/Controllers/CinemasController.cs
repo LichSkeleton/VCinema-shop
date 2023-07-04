@@ -38,7 +38,7 @@ namespace VCinema.Controllers
             await _service.AddAsync(cinema);
             return RedirectToAction(nameof(Index));
         }
-        //Get: Actors/Details/
+        //Get: Cinemas/Details/
         public async Task<IActionResult> Details(int id)
         {
             var cinemaDetails = await _service.GetByIdAsync(id);
@@ -46,7 +46,7 @@ namespace VCinema.Controllers
             if (cinemaDetails == null) return View("NotFound");
             return View(cinemaDetails);
         }
-        // Get: Actors/Edit
+        // Get: Cinemas/Edit
         public async Task<IActionResult> Edit(int id)
         {
             var actorDetails = await _service.GetByIdAsync(id);
@@ -62,11 +62,27 @@ namespace VCinema.Controllers
             ModelState.TryGetValue("Logo", out var logoError);
             ModelState.TryGetValue("Description", out var descriptionError);
 
-            if (idError==null || nameError == null || logoError == null || descriptionError == null)
+            if (idError == null || nameError == null || logoError == null || descriptionError == null)
             {
                 return View(cinema);
             }
             await _service.UpdateAsync(id, cinema);
+            return RedirectToAction(nameof(Index));
+        }
+        // Get: Cinemas/Delete
+        public async Task<IActionResult> Delete(int id)
+        {
+            var cinemaDetails = await _service.GetByIdAsync(id);
+            if (cinemaDetails == null) return View("NotFound");
+            return View(cinemaDetails);
+        }
+        [HttpPost, ActionName("Delete")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var cinemaDetails = await _service.GetByIdAsync(id);
+            if (cinemaDetails == null) return View("NotFound");
+
+            await _service.DeleteAsync(id);
             return RedirectToAction(nameof(Index));
         }
     }
