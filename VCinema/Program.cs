@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using VCinema.Data;
+using VCinema.Data.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +9,8 @@ var configuration = new ConfigurationBuilder()
     .SetBasePath(builder.Environment.ContentRootPath)
     .AddJsonFile("appsettings.json")
     .Build();
+//Services configuration
+builder.Services.AddScoped<IActorsService, ActorsService>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
