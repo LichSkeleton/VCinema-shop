@@ -38,7 +38,7 @@ namespace VCinema.Controllers
             await _service.AddAsync(actor);
             return RedirectToAction(nameof(Index));
         }
-        //Get: Actors/Details/1
+        //Get: Actors/Details/
         //[AllowAnonymous]
         public async Task<IActionResult> Details(int id)
         {
