@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using VCinema.Data;
 using VCinema.Data.Services;
+using VCinema.Models;
 
 namespace VCinema.Controllers
 {
@@ -16,6 +17,26 @@ namespace VCinema.Controllers
         {
             var allCinemas = await _service.GetAllAsync();
             return View(allCinemas);
+        }
+        // Get: Cinemas/Create
+        public IActionResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Create([Bind("Logo,Name,Description")] Cinema cinema)
+        {
+            // Check for validation errors only on relevant properties
+            ModelState.TryGetValue("Name", out var nameError);
+            ModelState.TryGetValue("Logo", out var logoError);
+            ModelState.TryGetValue("Description", out var descriptionError);
+
+            if (nameError == null || logoError == null || descriptionError == null)
+            {
+                return View(cinema);
+            }
+            await _service.AddAsync(cinema);
+            return RedirectToAction(nameof(Index));
         }
     }
 }
