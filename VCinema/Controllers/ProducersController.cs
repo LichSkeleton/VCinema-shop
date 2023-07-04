@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using VCinema.Data;
 using VCinema.Data.Services;
+using VCinema.Models;
 
 namespace VCinema.Controllers
 {
@@ -24,6 +25,26 @@ namespace VCinema.Controllers
             var producerDetails = await _service.GetByIdAsync(id);
             if (producerDetails == null) return View("NotFound");
             return View(producerDetails);
+        }
+
+        //GET: producers/create
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create([Bind("ProfilePictureURL,FullName,Bio")] Producer producer)
+        {
+            // Check for validation errors only on relevant properties
+            ModelState.TryGetValue("ProfilePictureURL", out var profilePictureUrlError);
+            ModelState.TryGetValue("FullName", out var fullNameError);
+            ModelState.TryGetValue("Bio", out var bioError);
+
+            if (fullNameError == null || profilePictureUrlError == null || bioError == null) return View(producer);
+
+            await _service.AddAsync(producer);
+            return RedirectToAction(nameof(Index));
         }
     }
 }
