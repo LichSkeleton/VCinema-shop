@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using VCinema.Data.Base;
 
 namespace VCinema.Models
 {
-    public class Actor
+    public class Actor : IEntityBase
     {
         [Key]
         public int Id { get; set; }
