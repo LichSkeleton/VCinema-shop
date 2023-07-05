@@ -44,6 +44,8 @@ app.UseRouting();
 
 app.UseAuthorization();
 
+app.UseSession(); // Add this line to configure session middleware
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
