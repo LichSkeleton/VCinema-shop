@@ -47,19 +47,19 @@
                 </ul>
 
                 @* User profile section *@
-                <div class="dropdown">
-                    <button class="btn btn-outline-success dropdown-toggle" type="button" id="profile-btn" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                        <i class="bi bi-person-badge"></i> Hello User
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="profile-btn">
-                        <li>
-                            <a class="dropdown-item" asp-controller="Orders" asp-action="Index">
-                                <i class="bi bi-list"></i> Orders
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+                @*                <div class="dropdown">
+                <button class="btn btn-outline-success dropdown-toggle" type="button" id="profile-btn" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                <i class="bi bi-person-badge"></i> Hello User
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="profile-btn">
+                <li>
+                <a class="dropdown-item" asp-controller="Orders" asp-action="Index">
+                <i class="bi bi-list"></i> Orders
+                </a>
+                </li>
+                </ul>
+                </div>*@
 
             </div>
         </nav>
@@ -70,13 +70,49 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="border-top border-muted text-muted">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Movies" asp-action="Index">VCinema</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Movies" asp-action="Index"><i class="bi bi-film"></i> Movies</a>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-gear"></i> Management
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" asp-controller="Cinemas" asp-action="Index"><i class="bi bi-camera-reels"></i> Cinemas</a></li>
+                                <li><a class="dropdown-item" asp-controller="Producers" asp-action="Index"><i class="bi bi-headset"></i> Producers</a></li>
+                                <li><a class="dropdown-item" asp-controller="Actors" asp-action="Index"><i class="bi bi-person-square"></i> Actors</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <form class="d-flex align-items-center" asp-controller="Movies" asp-action="Filter" style="padding-right: 25px;">
+                        <input name="searchString" type="text" class="form-control me-2" placeholder="Search for a movie...">
+                        <button class="btn btn-outline-success" type="submit"><i class="bi bi-search"></i></button>
+                    </form>
+                </div>
+                <ul class="navbar-nav">
+                    @await Component.InvokeAsync("ShoppingCartSummary")
+                </ul>
+            </div>
+        </nav>
         <div class="container">
-            &copy; 2023 - VCinema
+            &copy; 2023 - Vlad Zaplitnyi
         </div>
     </footer>
 
-@*    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    @*    <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>*@
 
