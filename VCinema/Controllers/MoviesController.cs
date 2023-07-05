@@ -20,7 +20,20 @@ namespace VCinema.Controllers
             return View(allMovies);
         }
 
-        //GET: Movies/Details/1
+        public async Task<IActionResult> Filter(string searchString)
+        {
+            var allMovies = await _service.GetAllAsync(n => n.Cinema);
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                var filteredResult = allMovies.Where(n => n.Name.Contains(searchString) || n.Description.Contains(searchString)).ToList();
+                return View("Index", filteredResult);
+            }
+
+            return View("Index", allMovies);
+        }
+
+        //GET: Movies/Details/
         public async Task<IActionResult> Details(int id)
         {
             var movieDetail = await _service.GetMovieByIdAsync(id);
