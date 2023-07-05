@@ -14,8 +14,6 @@ namespace VCinema.Data.Cart
         {
             _context = context;
         }
-
-
         public List<ShoppingCartItem> GetShoppingCartItems()
         {
             return ShoppingCartItems ?? (ShoppingCartItems = _context.ShoppingCartItems.Where(n => n.ShoppingCartId == ShoppingCartId).Include(n => n.Movie).ToList());
@@ -41,6 +39,24 @@ namespace VCinema.Data.Cart
             else
             {
                 shoppingCartItem.Amount++;
+            }
+            _context.SaveChanges();
+        }
+
+        public void RemoveItemFromCart(Movie movie)
+        {
+            var shoppingCartItem = _context.ShoppingCartItems.FirstOrDefault(n => n.Movie.Id == movie.Id && n.ShoppingCartId == ShoppingCartId);
+
+            if (shoppingCartItem != null)
+            {
+                if (shoppingCartItem.Amount > 1)
+                {
+                    shoppingCartItem.Amount--;
+                }
+                else
+                {
+                    _context.ShoppingCartItems.Remove(shoppingCartItem);
+                }
             }
             _context.SaveChanges();
         }
