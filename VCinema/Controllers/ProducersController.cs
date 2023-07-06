@@ -18,7 +18,6 @@ namespace VCinema.Controllers
             var allProducers = await _service.GetAllAsync();
             return View(allProducers);
         }
-
         //GET: producers/create
         public IActionResult Create()
         {
