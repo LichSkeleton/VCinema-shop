@@ -19,14 +19,6 @@ namespace VCinema.Controllers
             return View(allProducers);
         }
 
-        //GET: producers/details/1
-        public async Task<IActionResult> Details(int id)
-        {
-            var producerDetails = await _service.GetByIdAsync(id);
-            if (producerDetails == null) return View("NotFound");
-            return View(producerDetails);
-        }
-
         //GET: producers/create
         public IActionResult Create()
         {
@@ -45,6 +37,13 @@ namespace VCinema.Controllers
 
             await _service.AddAsync(producer);
             return RedirectToAction(nameof(Index));
+        }
+        //GET: producers/details/1
+        public async Task<IActionResult> Details(int id)
+        {
+            var producerDetails = await _service.GetByIdAsync(id);
+            if (producerDetails == null) return View("NotFound");
+            return View(producerDetails);
         }
         // Get: producers/Edit
         public async Task<IActionResult> Edit(int id)
